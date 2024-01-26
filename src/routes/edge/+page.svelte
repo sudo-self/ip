@@ -5,7 +5,7 @@
 	export let data;
 </script>
 
-<h1><span>ip.JesseJesse.com</span></h1>
+<h2><span>ip.JesseJesse.com</span></h2>
 
 <div class="info">
 	<Details city={data.city} ip={data.ip} />
