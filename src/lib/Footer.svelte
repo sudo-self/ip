@@ -15,11 +15,11 @@
 	</p>
 
 	<p class="details">
-		Built with <a target="_blank" rel="noreferrer" href="https://kit.svelte.dev">SvelteKit</a> +
+		powerwed by<a target="_blank" rel="noreferrer" href="https://JesseJesse.com">ip.JesseJesse.com</a> +
 		<a
 			target="_blank"
 			rel="noreferrer"
-			href="https://github.com/sveltejs/kit/tree/master/packages/adapter-vercel">adapter-vercel</a
+			href="https://sveltekit.jessejesse.com">svelte-kit</a
 		>
 
 		<small>Generated at {$page.data.now}</small>
@@ -34,8 +34,8 @@
 				fill="var(--fg)"
 			/>
 		</svg>
-		<a target="_blank" rel="noreferrer" href="https://github.com/Rich-Harris/sveltekit-on-the-edge">
-			Source
+		<a target="_blank" rel="noreferrer" href="https://github.com/sudo-self">
+			source
 		</a>
 	</p>
 </footer>
