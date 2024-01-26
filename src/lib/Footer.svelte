@@ -15,7 +15,7 @@
 	</p>
 
 	<p class="details">
-		made in colorado with &nbsp;&#x2665;&nbsp;<a target="_blank" rel="noreferrer" href="https://JesseJesse.com">ip.JesseJesse.com</a> +
+		made in colorado with &nbsp;&#x2665;&nbsp;<a target="_blank" rel="noreferrer" href="https://ip.JesseJesse.com">ip.JesseJesse.com</a> +
 		<a
 			target="_blank"
 			rel="noreferrer"
