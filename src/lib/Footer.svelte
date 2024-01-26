@@ -15,12 +15,7 @@
 	</p>
 
 	<p class="details">
-		made in colorado with &nbsp;&#x2665;&nbsp;<a target="_blank" rel="noreferrer" href="https://ip.JesseJesse.com">ip.JesseJesse.com</a> +
-		<a
-			target="_blank"
-			rel="noreferrer"
-			href="https://sveltekit.jessejesse.com">svelte-kit</a
-		>
+		made in colorado with &nbsp;&#x2665;&nbsp;<a target="_blank" rel="noreferrer" href="https://ip.JesseJesse.com">ip.JesseJesse.com</a>
 
 		<small>Generated at {$page.data.now}</small>
 	</p>
