@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>IP Tools - Address & Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class'
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/ip6@1.0.5/ip6.min.js"></script>
+  </head>
+
+  <body class="bg-white text-black dark:bg-gray-900 dark:text-white p-6 transition-colors duration-300">
+
+      <!-- Navbar -->
+      <nav class="bg-gray-200 dark:bg-gray-800 p-4 rounded shadow-md mb-6">
+        <div class="container mx-auto flex justify-between items-center">
+          <!-- Logo and Title -->
+          <div class="flex items-center space-x-3">
+            <img src="icon.png" alt="Logo" class="h-8 w-8 object-contain"> <!-- Your icon -->
+          </div>
+          
+          <!-- Theme Toggle Button -->
+          <div>
+            <button onclick="toggleTheme()" class="bg-transparent">
+              <img src="https://img.shields.io/badge/Light-Dark-yellow" alt="Toggle Theme">
+            </button>
+          </div>
+        </div>
+      </nav>
+
+
+    <h1 class="text-3xl font-bold mb-6 text-center">IP Address & Subnet Calculator</h1>
+
+    <!-- IP Controls -->
+    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-md shadow-md mb-6 max-w-xl mx-auto">
+      <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <button onclick="fetchIP('v4')" class="text-white"><img src="https://img.shields.io/badge/IPV4-public-blue" alt="Badge Preview"></button>
+        <button onclick="fetchIP('v6')" class="text-white"><img src="https://img.shields.io/badge/IPV6-public-blue" alt="Badge Preview"></button>
+        <button onclick="copyIP()" class="text-white"><img src="https://img.shields.io/badge/COPY-IP-blue" alt="Badge Preview"></button>
+      </div>
+      <p class="mt-6 text-xl font-semibold text-green-600 dark:text-green-400" id="ipAddress">Fetching...</p>
+    </div>
+
+    <!-- IP Details -->
+    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-md shadow-md max-w-xl mx-auto mb-6">
+      <h2 class="text-lg font-semibold mb-2">IP Details</h2>
+      <ul id="ipDetailsList" class="text-sm text-left space-y-1">
+        <li><strong>Version:</strong> <span id="ipVersion">Loading...</span></li>
+        <li><strong>Reverse DNS:</strong> <span id="ipRDNS">Loading...</span></li>
+        <li><strong>Country:</strong> <span id="ipCountry">Loading...</span></li>
+        <li><strong>Region:</strong> <span id="ipRegion">Loading...</span></li>
+        <li><strong>City:</strong> <span id="ipCity">Loading...</span></li>
+        <li><strong>ISP:</strong> <span id="ipISP">Loading...</span></li>
+        <li><strong>Organization:</strong> <span id="ipOrg">Loading...</span></li>
+        <li><strong>Latitude:</strong> <span id="ipLat">Loading...</span></li>
+        <li><strong>Longitude:</strong> <span id="ipLon">Loading...</span></li>
+      </ul>
+    </div>
+
+    <!-- Map -->
+    <div class="max-w-xl mx-auto mb-8">
+      <iframe id="mapFrame" width="100%" height="300" class="rounded-md shadow-md" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <!-- IPv6 Shortener -->
+    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-md shadow-md max-w-xl mx-auto mb-6">
+      <h2 class="text-xl font-semibold mb-2">IPv6 Shortener</h2>
+      <input type="text" id="ipv6Input" placeholder="2001:0db8:0000:0000:34f4:0000:0000:f3dd" class="w-full p-2 text-black rounded-md mb-4"/>
+      <button onclick="shortenIPv6()" class="bg-indigo-700 px-4 py-2 rounded hover:bg-pink-800 text-white">Shorten IPv6</button>
+      <div id="ipv6Result" class="mt-4 text-yellow-700 dark:text-yellow-400 text-sm"></div>
+    </div>
+
+    <!-- IPv6 Subnet Calculator -->
+    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-md shadow-md max-w-xl mx-auto mb-6">
+      <h2 class="text-xl font-semibold mb-2">IPv6 Subnet Calculator</h2>
+      <input type="text" id="ipv6SubnetInput" placeholder="2001:db8::/64" class="w-full p-2 text-black rounded-md mb-4"/>
+      <button onclick="calculateIPv6Subnet()" class="bg-indigo-700 px-4 py-2 rounded hover:bg-pink-800 text-white">Calculate Subnet</button>
+      <div id="ipv6SubnetResult" class="mt-4 text-yellow-700 dark:text-yellow-400 text-sm whitespace-pre-wrap text-left"></div>
+    </div>
+
+    <!-- IPv4 Subnet Calculator -->
+    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-md shadow-md max-w-xl mx-auto mb-6">
+      <h2 class="text-xl font-semibold mb-2">IPv4 Subnet Calculator</h2>
+      <input type="text" id="ipv4Input" placeholder="192.168.1.0/24" class="w-full p-2 text-black rounded-md mb-4"/>
+      <button onclick="calculateIPv4Subnet()" class="bg-indigo-700 px-4 py-2 rounded hover:bg-pink-800 text-white">Calculate Subnet</button>
+      <div id="ipv4SubnetResult" class="mt-4 text-yellow-700 dark:text-yellow-400 text-sm whitespace-pre-wrap text-left"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-8 py-4 rounded-t-lg">
+      <p class="text-sm text-center text-gray-600 dark:text-gray-400">
+        Made with ❤️ in Colorado&nbsp;|&nbsp;
+        <a href="https://ip-helper.pages.dev/" class="text-blue-600 dark:text-green-400 hover:underline">
+          ip.JesseJesse.com
+        </a>
+      </p>
+    </footer>
+
+
+    <script>
+      let currentIP = "";
+
+      function toggleTheme() {
+        document.documentElement.classList.toggle('dark');
+      }
+
+      async function fetchIP(version = 'v4') {
+        try {
+          const data = await fetch('https://ipapi.co/json/').then(res => res.json());
+          const ip = data.ip;
+          const isV6 = ip.includes(":");
+
+          currentIP = ip;
+          document.getElementById("ipAddress").textContent = ip;
+          document.getElementById("ipVersion").textContent = isV6 ? "IPv6" : "IPv4";
+          document.getElementById("ipCountry").textContent = data.country_name || "N/A";
+          document.getElementById("ipRegion").textContent = data.region || "N/A";
+          document.getElementById("ipCity").textContent = data.city || "N/A";
+          document.getElementById("ipISP").textContent = data.org || "N/A";
+          document.getElementById("ipOrg").textContent = data.asn || "N/A";
+          document.getElementById("ipLat").textContent = data.latitude || "N/A";
+          document.getElementById("ipLon").textContent = data.longitude || "N/A";
+
+          // Update map
+          const mapUrl = `https://maps.google.com/maps?q=${data.latitude},${data.longitude}&z=15&output=embed`;
+          document.getElementById("mapFrame").src = mapUrl;
+
+          // Reverse DNS
+          fetch(`https://dns.google/resolve?name=${ip}&type=PTR`)
+            .then(res => res.json())
+            .then(dns => {
+              const name = dns.Answer?.[0]?.data || "N/A";
+              document.getElementById("ipRDNS").textContent = name.replace(/\.$/, '');
+            });
+
+        } catch (e) {
+          document.getElementById("ipAddress").textContent = "Failed to load IP";
+        }
+      }
+
+      function copyIP() {
+        navigator.clipboard.writeText(currentIP).then(() => {
+          alert("IP address copied to clipboard!");
+        });
+      }
+
+      function shortenIPv6() {
+        const input = document.getElementById("ipv6Input").value.trim();
+        if (!input.includes(":")) {
+          document.getElementById("ipv6Result").textContent = "Invalid IPv6 address.";
+          return;
+        }
+        try {
+          const compressed = input.replace(/(^|:)0{1,3}/g, ":").replace(/:{2,}/, "::");
+          document.getElementById("ipv6Result").textContent = "Shortened: " + compressed;
+        } catch (e) {
+          document.getElementById("ipv6Result").textContent = "Error parsing address.";
+        }
+      }
+
+      function calculateIPv6Subnet() {
+        const cidr = document.getElementById("ipv6SubnetInput").value.trim();
+        const resultEl = document.getElementById("ipv6SubnetResult");
+        resultEl.textContent = "";
+
+        try {
+          const subnet = new window.Ip6Subnet(cidr);
+          const first = subnet.start().toString();
+          const last = subnet.end().toString();
+          const size = subnet.count();
+          resultEl.textContent = `Network: ${cidr}\nRange: ${first} – ${last}\nTotal Addresses: ${size}`;
+        } catch (err) {
+          resultEl.textContent = "Invalid CIDR block.";
+        }
+      }
+
+      function calculateIPv4Subnet() {
+        const input = document.getElementById("ipv4Input").value.trim();
+        const result = document.getElementById("ipv4SubnetResult");
+
+        try {
+          const [ip, cidr] = input.split('/');
+          const maskBits = parseInt(cidr);
+          const mask = ~(2 ** (32 - maskBits) - 1);
+          const ipParts = ip.split('.').map(Number);
+          const ipInt = ipParts.reduce((acc, octet) => (acc << 8) | octet, 0);
+          const network = ipInt & mask;
+          const broadcast = network | ~mask;
+
+          const intToIp = (i) => [(i >>> 24) & 255, (i >>> 16) & 255, (i >>> 8) & 255, i & 255].join('.');
+
+          result.textContent = `Network: ${intToIp(network)}\nBroadcast: ${intToIp(broadcast)}\nSubnet Mask: ${intToIp(mask)}\nHosts: ${2 ** (32 - maskBits) - 2}`;
+        } catch (e) {
+          result.textContent = "Invalid IPv4 address or CIDR.";
+        }
+      }
+
+      fetchIP();
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+
