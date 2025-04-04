@@ -81,13 +81,12 @@
 
     <!-- IP Controls -->
     <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-md shadow-md mb-6 max-w-xl mx-auto">
-      <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4">
-        <button onclick="fetchIP('v4')" class="text-white"><img src="https://img.shields.io/badge/IPV4-public-blue" alt="Badge Preview"></button>
-        <button onclick="fetchIP('v6')" class="text-white"><img src="https://img.shields.io/badge/IPV6-public-blue" alt="Badge Preview"></button>
-        <button onclick="copyIP()" class="text-white"><img src="https://img.shields.io/badge/COPY-IP-blue" alt="Badge Preview"></button>
+      <div class="flex flex-col items-center">
+        <p class="text-4xl font-semibold text-green-600 dark:text-green-400" id="ipAddress">Fetching...</p>
+        <button onclick="copyIP()" class="mt-4 text-white"><img src="https://img.shields.io/badge/copy-IP-blue" alt="Badge Preview"></button>
       </div>
-      <p class="mt-6 text-xl font-semibold text-green-600 dark:text-green-400" id="ipAddress">Fetching...</p>
     </div>
+
 
     <!-- IP Details -->
     <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-md shadow-md max-w-xl mx-auto mb-6">
